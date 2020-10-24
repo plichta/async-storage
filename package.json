@@ -43,14 +43,14 @@
     "start:web": "expo start:web",
     "start:macos": "react-native start --use-react-native-macos",
     "start:windows": "react-native start --use-react-native-windows",
-    "build:e2e:ios": "detox build -c ios",
-    "build:e2e:android": "detox build -c android",
+    "build:e2e:ios": "detox build -c ios.sim.release",
+    "build:e2e:android": "detox build -c android.emu.release",
     "build:e2e:macos": "scripts/run_macos_e2e.sh 'build'",
     "test": "yarn test:lint && yarn test:flow",
     "test:flow": "flow check",
     "test:lint": "eslint src/**/*.js example/**/*.js jest/*.js",
-    "test:e2e:ios": "detox test -c ios",
-    "test:e2e:android": "detox test -c android",
+    "test:e2e:ios": "detox test -c ios.sim.release",
+    "test:e2e:android": "detox test -c android.emu.release",
     "test:e2e:macos": "scripts/run_macos_e2e.sh 'test'"
   },
   "peerDependencies": {
@@ -97,17 +97,21 @@
     "test-runner": "jest",
     "runner-config": "example/e2e/config.json",
     "configurations": {
-      "ios": {
-        "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/AsyncStorageExample.app",
+      "ios.sim.release": {
+        "binaryPath": "example/ios/build/Build/Products/Release-iphonesimulator/ReactTestApp.app",
         "build": ".circleci/scripts/run_ios_e2e.sh \"iPhone 11\"",
         "type": "ios.simulator",
-        "name": "iPhone 11"
+        "device": {
+          "type": "iPhone 11"
+        }
       },
-      "android": {
+      "android.emu.release": {
         "binaryPath": "example/android/app/build/outputs/apk/release/app-release.apk",
         "build": ".circleci/scripts/run_android_e2e.sh",
         "type": "android.emulator",
-        "name": "Emu_E2E"
+        "device": {
+          "avdName": "Emu_E2E"
+        }
       }
     }
   },
